@@ -1,0 +1,14 @@
+Weather Observation Station 5
+
+with base as 
+(
+select city,len(city) as city_length from station
+),
+base1 as(
+select city,len(city) as length_city from station where len(city) = (select max(city_length) from base)
+union
+select city,len(city) from station where len(city) = (select min(city_length) from base)
+),
+base2 as(
+select city,length_city,dense_rank() over(partition by length_city order by city) rn from base1)
+select city,length_city from base2 where rn=1;
