@@ -1,0 +1,3 @@
+Weather Observation Station 4
+
+select (count(city) - count(distinct(city))) as di_city from station;
